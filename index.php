@@ -3,13 +3,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 include "./functions.php";
 
-$newPassword = '';
+session_start();
+// $newPassword = '';
 
 if(isset($_GET['passwordLength'])) {
     $passwordLength = $_GET['passwordLength'];
     $newPassword = generatePassword($passwordLength);
+    $_SESSION['generated_password'] = $newPassword;
+
+    header("Location: ./show_password.php");
 }
 
 
@@ -35,12 +40,6 @@ if(isset($_GET['passwordLength'])) {
             <button type="submit">Genera</button>
         </form>
 
-        <?php if (!empty($newPassword)) { ?>
-            <div class="card p-5">
-                <h2>Password generata:</h2>
-                <p><?php echo $newPassword; ?></p>
-            </div>
-        <?php } ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
